@@ -3,6 +3,7 @@ local type = type
 local tostring = tostring
 
 local utils = require("orange.utils.utils")
+local json = require("orange.utils.json")
 local orange_db = require("orange.store.orange_db")
 local judge_util = require("orange.utils.judge")
 local BasePlugin = require("orange.plugins.base_handler")
@@ -63,6 +64,17 @@ local function filter_rules(sid, plugin, ngx_var_uri)
                         end
 
                         ngx.header["X-RateLimit-Remaining" .. "-" .. limit_type] = 0
+                        
+                        ngx.status = 429
+                        
+                        if handle.content_type ~= nil then
+                             ngx.header.content_type = handle.content_type
+                        end
+
+                        if handle.content ~= nil then
+                            ngx.say(handle.content)
+                        end
+
                         ngx.exit(429)
                         return true
                     else
