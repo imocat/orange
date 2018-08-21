@@ -35,7 +35,11 @@
             $('#clean-btn').click(function() {
                 $.ajax({
                     url: '/persist/clean',
+<<<<<<< HEAD
                     type: 'delete',
+=======
+                    type: 'post',
+>>>>>>> v0.7.0-dev-persist
                     cache: false,
                     dataType: 'json',
                     success: function(result) {
