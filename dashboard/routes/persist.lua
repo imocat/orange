@@ -36,5 +36,15 @@ return function(config, store)
         })
     end)
 
+    persist_router:delete("/persist/clean"), function(req,res,next)
+
+        persist_model:clean()
+
+        res:json({
+            success = true,
+        })
+
+    end)
+
     return persist_router
 end

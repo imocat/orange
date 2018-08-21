@@ -49,9 +49,9 @@ end
 local function write_data(config)
 
     -- 是否开启
-    local enable = orange_db.get("monitor.enable")
+    local enable = orange_db.get("persist.enable")
 
-    if not enable or enable ~= true or not meta then
+    if not enable or enable ~= true then
         return
     end
 
@@ -155,9 +155,18 @@ local function get_ip_by_hostname(hostname)
 end
 
 function _M.init(config)
+
+    -- 是否开启
+    local enable = orange_db.get("persist.enable")
+
+    if not enable or enable ~= true then
+        return
+    end
+
     ngx.log(ngx.ERR, "persist init worker")
 
-    local interval = 60
+    -- 统计粒度 5 分钟
+    local interval = 60 * 5
 
     -- 单进程，只执行一次
     if ngx.worker.id() == 0 then
