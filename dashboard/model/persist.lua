@@ -43,6 +43,20 @@ return function(config)
         end
     end
 
+    function node_model:clean()
+        local result, err, sql
+        sql = "DELETE FROM " .. table_name .. " WHERE 1=1"
+
+        result, err = db:query(sql)
+
+        if not result or err then
+            return nil, err
+        else
+            return result, err
+        end
+
+    end
+
     function node_model:get_stat_by_ip(ip, limit, group_by_day)
 
         local result, err, sql
