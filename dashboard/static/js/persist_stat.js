@@ -34,10 +34,9 @@
 
             $('#clean-btn').click(function() {
                 $.ajax({
-                    url: '/persist/statistic',
-                    type: 'get',
+                    url: '/persist/clean',
+                    type: 'post',
                     cache: false,
-                    data: data,
                     dataType: 'json',
                     success: function(result) {
                         if (result.success) {
