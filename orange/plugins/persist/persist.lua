@@ -1,5 +1,6 @@
 local socket = require("socket")
 local status = ngx.shared.status
+local orange_db = require("orange.store.orange_db")
 
 local KEY_TOTAL_COUNT = "TOTAL_REQUEST_COUNT"
 local KEY_TOTAL_SUCCESS_COUNT = "TOTAL_SUCCESS_REQUEST_COUNT"
@@ -46,6 +47,13 @@ local function setinterval(callback, interval)
 end
 
 local function write_data(config)
+
+    -- 是否开启持久化日志服务
+    local enable = orange_db.get("persist.enable")
+    
+    if not enable or enable ~= true or not meta then
+        return
+    end
 
     -- 暂存
     local request_2xx = status:get(KEY_REQUEST_2XX)
